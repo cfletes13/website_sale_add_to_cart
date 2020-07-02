@@ -20,3 +20,4 @@ class WebsiteSaleExtended(WebsiteSale):
         if add_qty == 0:
             return {product.id: 0 for product in products}
             return super(WebsiteSaleExtended, self).get_unit_price(self, product_ids, add_qty, **post)
+        

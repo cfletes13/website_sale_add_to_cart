@@ -1,6 +1,7 @@
 .quick_add_to_cart {
     max-width: 130px;
-    position: absolute;
+    margin-top: 10px;
+    position: relative;
     bottom: 0;
     right: 0;
     z-index: 5;
