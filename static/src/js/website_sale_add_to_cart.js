@@ -5,6 +5,7 @@ odoo.define("website_sale_add_to_cart", function(require) {
 
     $(document).ready(function() {
         // For page of a product
+
         var page_product_id = $("input.product_id").val();
 
         if (!page_product_id && !$("#products_grid_before")) {
@@ -25,6 +26,7 @@ odoo.define("website_sale_add_to_cart", function(require) {
                 if (isNaN(value)) {
                     value = 0;
                 }
+
                 return ajax
                     .jsonRpc("/shop/cart/update_json", "call", {
                         line_id: parseInt($input.data("line-id"), 10),
@@ -35,10 +37,13 @@ odoo.define("website_sale_add_to_cart", function(require) {
                         set_qty: value,
                     })
                     .then(function(data) {
-                        if (!data.quantity) {
+                        if (!data.quantity ) {
                             location.reload();
                             return;
+                        } else{
+                            location.reload();
                         }
+
                         var $q = $(".my_cart_quantity");
                         $q.parent()
                             .parent()

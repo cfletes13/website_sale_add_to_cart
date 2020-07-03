@@ -17,7 +17,7 @@ class WebsiteSaleExtended(WebsiteSale):
     #@http.route(qcontext=None)
     def get_unit_price(self, product_ids, add_qty, **post):
         products = (request.env['product.product'].with_context({'quantity': add_qty}).browse(product_ids))
+
         if add_qty == 0:
             return {product.id: 0 for product in products}
             return super(WebsiteSaleExtended, self).get_unit_price(self, product_ids, add_qty, **post)
-        
