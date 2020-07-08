@@ -19,42 +19,41 @@ odoo.define("website_sale_add_to_cart", function(require) {
         }
         var update_json = $.Deferred();
         update_json.resolve();
+
         $(".input-group > input.form-control").change(function() {
             var $input = $(this);
-            update_json = update_json.then(function() {
-                var value = parseInt($input.val(), 10);
-                if (isNaN(value)) {
-                    value = 0;
-                }
+                update_json = update_json.then(function() {
+                    var value = parseInt($input.val(), 10);
+                    if (isNaN(value)) {
+                        value = 0;
+                    }
 
-                return ajax
-                    .jsonRpc("/shop/cart/update_json", "call", {
-                        line_id: parseInt($input.data("line-id"), 10),
-                        product_id: parseInt(
-                            $input.data("product-id") || $("input.product_id").val(),
-                            10
-                        ),
-                        set_qty: value,
-                    })
-                    .then(function(data) {
-                        if (!data.quantity ) {
-                            location.reload();
-                            return;
-                        } else{
-                            location.reload();
-                        }
+                    return ajax
+                        .jsonRpc("/shop/cart/update_json", "call", {
+                            line_id: parseInt($input.data("line-id"), 10),
+                            product_id: parseInt(
+                                $input.data("product-id") || $("input.product_id").val(),
+                                10
+                            ),
+                            set_qty: value,
+                        })
+                        .then(function(data) {
+                            if (!data.quantity ) {
+                                location.reload();
+                                return;
+                            } else{
+                                location.reload();
+                            }
 
-                        var $q = $(".my_cart_quantity");
-                        $q.parent()
-                            .parent()
-                            .removeClass("hidden", !data.quantity);
-                        $q.html(data.cart_quantity)
-                            .hide()
-                            .fadeIn(600);
-                        // $input.val(data.quantity);
-                        $("#cart_total").replaceWith(data["website_sale.total"]);
-                    });
-            });
+                            var $q = $(".my_cart_quantity");
+                            $q.parent().parent().removeClass("hidden", !data.quantity);
+                            $q.html(data.cart_quantity).hide().fadeIn(600);
+                            $input.val(data.quantity);
+                            $("#cart_total").replaceWith(data["website_sale.total"]);
+
+                        });
+                });
+            //}
         });
         /*
     $('.oe_website_sale .oe_product_cart .oe_product_image a').on('click', function (ev) {
@@ -85,4 +84,8 @@ odoo.define("website_sale_add_to_cart", function(require) {
             });
         });
     });
+
+
+
+
 });
